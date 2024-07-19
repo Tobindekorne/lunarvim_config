@@ -15,4 +15,6 @@ vim.opt.foldmethod = "indent"
 -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.opt.foldtext = require("modules.foldtext")
 vim.opt.foldlevelstart = 99
--- vim.opt.foldlevel = 99
+-- require("notify").setup({
+--   background_colour = "#000000",
+-- })

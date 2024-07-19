@@ -29,6 +29,47 @@ wk.mappings["m"] = {
   p = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev file" },
 }
 
+
+
+function _G.cargo_run_and_show_results()
+  vim.cmd("w")  -- Save the current buffer
+
+  -- Buffer and window configuration
+  local buf = vim.api.nvim_create_buf(false, true)  -- Create a new buffer
+  local width = vim.api.nvim_get_option("columns")
+  local height = vim.api.nvim_get_option("lines")
+  local win_height = math.ceil(height * 0.8 - 4)
+  local win_width = math.ceil(width * 0.8)
+  local row = math.ceil((height - win_height) / 2 - 1)
+  local col = math.ceil((width - win_width) / 2)
+
+  local opts = {
+    relative = "editor",
+    width = win_width,
+    height = win_height,
+    row = row,
+    col = col,
+    style = "minimal"
+  }
+
+  local win = vim.api.nvim_open_win(buf, true, opts)
+
+  -- Run cargo run and capture the output
+  vim.fn.jobstart("cargo run", {
+    on_stdout = function(_, data)
+      if data then
+        vim.api.nvim_buf_set_lines(buf, -1, -1, false, data)
+      end
+    end,
+    stdout_buffered = true,
+  })
+end
+
+wk.mappings["r"] = {
+  name = ' ' .. kind.icons.term .. " Run with...",
+  r = {":lua cargo_run_and_show_results()<CR>", "Rust [quiet]"}
+
+}
 local picker = require('window-picker')
 -- local function pick_a_window()
 --   local picked_window_id = picker.pick_window({
@@ -58,7 +99,7 @@ function Swap_windows()
     end)
 
     if not status then
-        print("Error picking a window: " .. window)  -- window will contain the error message
+       print("Error picking a window: " .. window)  -- window will contain the error message
         return
     end
 

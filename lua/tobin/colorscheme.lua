@@ -16,10 +16,22 @@ local themes = {
   edge = "edge",
   ayu = "ayu",
   nightfox = "nightfox",
+  github_dark="github_dark",
+  catppuccin="catppuccin",
 }
 
 lvim.transparent_window = true
 lvim.colorscheme = themes.gruvbox
+
+-- Set Catppuccin as the colorscheme
+vim.cmd.colorscheme = "catppuccin"
+vim.g.catppuccin_flavour = "macchiato" -- Set desired flavour: latte, frappe, macchiato, mocha
+require("catppuccin").setup()
+
+local latte = require("catppuccin.palettes").get_palette "latte"
+local frappe = require("catppuccin.palettes").get_palette "frappe"
+local macchiato = require("catppuccin.palettes").get_palette "macchiato"
+local mocha = require("catppuccin.palettes").get_palette "mocha"
 
 local extra_opts = {
   sonokai = {

@@ -64,7 +64,32 @@ lvim.plugins = {
       "rcarriga/nvim-notify",
     }
   },
+  {
+    'projekt0n/github-nvim-theme',
+    -- lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    -- priority = 1000, -- make sure to load this before all the other start plugins
+    -- config = function()
+    --   require('github-theme').setup({
+    --     -- ...
+    --   })
+
+    --   vim.cmd('colorscheme github_dark')
+    -- end,
+  },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    config = function()
+      require("catppuccin").setup({
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+        transparent_background = lvim.transparent_window,
+        -- Add any other configuration options here
+      })
+    end,
+  },
 }
+
+
 
 require("gitsigns")
 lvim.builtin.gitsigns.opts.current_line_blame = true
